@@ -12,8 +12,6 @@ makepkg -si # Must be run as a non-root user
 
 ## GLFW install from source
 
-### Attempt1
-
 pacman -S cmake xorg-dev
 
 git clone https://github.com/glfw/glfw.git
@@ -46,3 +44,22 @@ SET(SOURCE_FILES main.cpp)
 ADD_EXECUTABLE(project ${SOURCE_FILES})
 TARGET_LINK_LIBRARIES(project glfw)
 TARGET_LINK_LIBRAggRIES(project OpenGL::GL)
+
+## OpenAL from arch
+IMPORTANT: OpenAL Soft is the version to use
+
+Relevant scripts:
+FindOpenAl.cmake
+```
+#### OpenAL #####
+#find_package(OpenAL)
+#if($OPENAL_FOUND)
+#else($OPENAL_Found)
+#        ExternalProject_Add(
+#        OpenAL
+#        URL http://kcat.strangesoft.net/openal-releases/openal-soft-1.14.tar.bz2
+#    )
+#endif($OPENAL_FOUND)
+```
+
+ln -sfT /usr/lib/libopenal.so ~/openal-soft/build/libopenal.so

@@ -1,9 +1,11 @@
 #include <GLFW/glfw3.h>
+#include <AL/al.h>
 
 int main(void)
 {
     GLFWwindow* window;
 
+    alGetError();
     /* Initialize the library */
     if (!glfwInit())
         return -1;
