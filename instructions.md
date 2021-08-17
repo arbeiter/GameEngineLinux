@@ -63,3 +63,8 @@ FindOpenAl.cmake
 ```
 
 ln -sfT /usr/lib/libopenal.so ~/openal-soft/build/libopenal.so
+
+## Setting up audio for arch
+
+pacman -S alsa-utils
+speaker-test -c2

@@ -1,11 +1,17 @@
 #include <GLFW/glfw3.h>
 #include <AL/al.h>
+#include <AL/alc.h>
 
 int main(void)
 {
     GLFWwindow* window;
 
     alGetError();
+    ALCdevice *device;
+    device = alcOpenDevice(NULL);
+    if(!device) {
+      return -1;
+    }
     /* Initialize the library */
     if (!glfwInit())
         return -1;
