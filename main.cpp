@@ -1,16 +1,24 @@
 #include <GLFW/glfw3.h>
 #include <AL/al.h>
 #include <AL/alc.h>
+#include <iostream>
 
 int main(void)
 {
     GLFWwindow* window;
 
-    alGetError();
     ALCdevice *device;
     device = alcOpenDevice(NULL);
     if(!device) {
+      std::cout << "FAILURE";
       return -1;
+    }
+    ALboolean enumeration;
+    enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATION_EXIT");
+    if(enumeration == AL_FALSE) {
+      std::cout << "ENUMERATION FALSE";
+    } else {
+      std::cout << "ENUMERATION TRUE";
     }
     /* Initialize the library */
     if (!glfwInit())

@@ -66,5 +66,5 @@ ln -sfT /usr/lib/libopenal.so ~/openal-soft/build/libopenal.so
 
 ## Setting up audio for arch
 
-pacman -S alsa-utils
+pacman -S alsa-utils alsa-plugins
 speaker-test -c2
