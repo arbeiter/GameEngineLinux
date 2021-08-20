@@ -68,3 +68,11 @@ ln -sfT /usr/lib/libopenal.so ~/openal-soft/build/libopenal.so
 
 pacman -S alsa-utils alsa-plugins
 speaker-test -c2
+
+## Setting up libsndfile
+https://github.com/libsndfile/libsndfile
+
+yay -S libsndfile
+pacman -S libsndfile
+TODO: uninstall one of the above
+FindCMake doesn't work, to fix
