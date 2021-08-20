@@ -12,6 +12,9 @@ void checkForErrors();
 void setupOpenAl() {
 	checkForErrors();
 
+	ALenum err, format;
+    SF_INFO sfinfo;
+
 	ALboolean enumeration;
 	ALCdevice *device;
 	const ALCchar *defaultDeviceName;
@@ -72,6 +75,7 @@ void setupOpenAl() {
 	alSourcei(source, AL_LOOPING, AL_FALSE);
 	checkForErrors();
 
+
 	// Setup buffers
 	alGenBuffers((ALuint)1, &buffer);
 	checkForErrors();
@@ -83,6 +87,44 @@ void setupOpenAl() {
 	inFile = sf_open(fname, SFM_READ, &inFileInfo);
 	int fs = inFileInfo.samplerate;
 	std::cout << "SAMPLE RATE " << fs << std::endl;
+
+	// LibSndFile
+	format = AL_NONE;
+	if (inFileInfo.channels == 1)
+		format = AL_FORMAT_MONO16;
+	else if (inFileInfo.channels == 2)
+		format = AL_FORMAT_STEREO16;
+
+	if (!format) {
+		std::cout << "FORMAT FAILED" << std::endl;
+	} else {
+		std::cout << inFileInfo.channels << std::endl;
+	}
+	
+	// Read file data into buffer
+	short* membuf;
+	sf_count_t num_frames;
+	ALsizei num_bytes;
+
+	membuf = static_cast<short*>(malloc((size_t)(inFileInfo.frames * inFileInfo.channels) * sizeof(short)));
+	num_frames = sf_readf_short(inFile, membuf, inFileInfo.frames);
+	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
+
+	alBufferData(buffer, format, membuf, num_bytes, inFileInfo.samplerate);
+	free(membuf);
+	sf_close(inFile);
+	checkForErrors();
+
+	ALint source_state;	
+	alSourcei(source, AL_BUFFER, buffer);
+	alSourcePlay(source);
+	checkForErrors();
+	alGetSourcei(source, AL_SOURCE_STATE, &source_state);
+	std::cout << "PLAYING" << std::endl;
+	while (source_state == AL_PLAYING) {
+		alGetSourcei(source, AL_SOURCE_STATE, &source_state);
+		checkForErrors();
+	}
 
 	/* cleanup */
 	std::cout << "Initiating cleanup" << std::endl;
