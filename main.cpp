@@ -75,7 +75,6 @@ void setupOpenAl() {
 	alSourcei(source, AL_LOOPING, AL_FALSE);
 	checkForErrors();
 
-
 	// Setup buffers
 	alGenBuffers((ALuint)1, &buffer);
 	checkForErrors();
@@ -109,6 +108,10 @@ void setupOpenAl() {
 	membuf = static_cast<short*>(malloc((size_t)(inFileInfo.frames * inFileInfo.channels) * sizeof(short)));
 	num_frames = sf_readf_short(inFile, membuf, inFileInfo.frames);
 	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
+	std::cout << "InFileInfo CHANNELS " << inFileInfo.channels << std::endl;
+	std::cout << "InFileInfo FRAMES" << inFileInfo.frames << std::endl;
+	std::cout << "NUM FRAMES" << num_frames << std::endl;
+	std::cout << "NUM BYTES" << num_bytes << std::endl;
 
 	alBufferData(buffer, format, membuf, num_bytes, inFileInfo.samplerate);
 	free(membuf);
@@ -117,9 +120,14 @@ void setupOpenAl() {
 
 	ALint source_state;	
 	alSourcei(source, AL_BUFFER, buffer);
+	checkForErrors();
+
 	alSourcePlay(source);
 	checkForErrors();
+
 	alGetSourcei(source, AL_SOURCE_STATE, &source_state);
+	checkForErrors();
+	
 	std::cout << "PLAYING" << std::endl;
 	while (source_state == AL_PLAYING) {
 		alGetSourcei(source, AL_SOURCE_STATE, &source_state);
