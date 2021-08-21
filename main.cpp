@@ -107,11 +107,12 @@ void setupOpenAl() {
 
 	membuf = static_cast<short*>(malloc((size_t)(inFileInfo.frames * inFileInfo.channels) * sizeof(short)));
 	num_frames = sf_readf_short(inFile, membuf, inFileInfo.frames);
-	num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
+	num_bytes = (ALsizei)(num_frames * inFileInfo.channels) * (ALsizei)sizeof(short);
 	std::cout << "InFileInfo CHANNELS " << inFileInfo.channels << std::endl;
 	std::cout << "InFileInfo FRAMES" << inFileInfo.frames << std::endl;
 	std::cout << "NUM FRAMES" << num_frames << std::endl;
 	std::cout << "NUM BYTES" << num_bytes << std::endl;
+	std::cout << "LHS" << inFileInfo.channels << std::endl;
 
 	alBufferData(buffer, format, membuf, num_bytes, inFileInfo.samplerate);
 	free(membuf);
@@ -183,7 +184,6 @@ int main(void)
 	/* Initialize the library */
 	std::thread t1(setupOpenAl);
 	t1.join();
-	return -1;
 	GLFWwindow* window;
 	if (!glfwInit())
 		return -1;
