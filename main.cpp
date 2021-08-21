@@ -183,7 +183,7 @@ int main(void)
 {
 	/* Initialize the library */
 	std::thread t1(setupOpenAl);
-	t1.join();
+
 	GLFWwindow* window;
 	if (!glfwInit())
 		return -1;
