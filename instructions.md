@@ -1,8 +1,14 @@
+## Setup arch linux
+Follow the wiki process and setup Xorg.
+
 ## Setup
 
 pacman -S --needed git base-devel
+
 git clone https://aur.archlinux.org/yay.git
+
 cd yay
+
 makepkg -si # Must be run as a non-root user
 
 ### Notes for arch user setup
@@ -70,9 +76,8 @@ pacman -S alsa-utils alsa-plugins
 speaker-test -c2
 
 ## Setting up libsndfile
+
 https://github.com/libsndfile/libsndfile
 
 yay -S libsndfile
 pacman -S libsndfile
-TODO: uninstall one of the above
-FindCMake doesn't work, to fix
